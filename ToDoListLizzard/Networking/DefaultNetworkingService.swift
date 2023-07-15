@@ -21,12 +21,12 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = HTTPMethod.get.rawValue
         request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
         let (data, response) = try await urlSession.data(for: request)
         
         if let response = response as? HTTPURLResponse {
-            if response.statusCode >= 500 &&  response.statusCode < 600{
+            if response.statusCode >= 500 &&  response.statusCode < 600 {
                 isDirty = true
                 throw NetworkingError.unexpectedResponse(response)
             }
@@ -45,7 +45,7 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "PATCH"
+        request.httpMethod = HTTPMethod.patch.rawValue
 
         request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
         request.setValue("\(self.revision)", forHTTPHeaderField: "X-Last-Known-Revision")
@@ -79,7 +79,7 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = HTTPMethod.get.rawValue
         request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
         let (data, response) = try await urlSession.data(for: request)
         if let response = response as? HTTPURLResponse {
@@ -101,7 +101,7 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = HTTPMethod.post.rawValue
 
         request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
         request.setValue("\(self.revision)", forHTTPHeaderField: "X-Last-Known-Revision")
@@ -135,7 +135,7 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
+        request.httpMethod = HTTPMethod.put.rawValue
 
         request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
         request.setValue("\(self.revision)", forHTTPHeaderField: "X-Last-Known-Revision")
@@ -173,7 +173,7 @@ class DefaultNetworkingService: NetworkingService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
+        request.httpMethod = HTTPMethod.delete.rawValue
         
         request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
         request.setValue("\(self.revision)", forHTTPHeaderField: "X-Last-Known-Revision")
@@ -206,4 +206,13 @@ class DefaultNetworkingService: NetworkingService {
     }
     
     
+}
+
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case patch = "PATCH"
+    case delete = "DELETE"
 }
