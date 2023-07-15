@@ -1,0 +1,6 @@
+framework module Pods_ToDoListLizzard_ToDoListLizzardUITests {
+  umbrella header "Pods-ToDoListLizzard-ToDoListLizzardUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
