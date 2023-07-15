@@ -30,14 +30,14 @@ public final class CoreDataBase {
                 try context.save()
             }
         } catch {
-            print("Error saving context \(error)")
+            print("Error with saving context \(error)")
         }
     }
     
-    func delete(id: String) {
+    func delete(item: TodoItem) {
         var index: Int?
-        for identifier in (0..<itemsCoreData.count) where itemsCoreData[identifier].id == id {
-            index = identifier
+        for id in (0..<itemsCoreData.count) where itemsCoreData[id].id == item.id {
+            index = id
         }
         if let index = index {
             if let context = context {
@@ -50,26 +50,26 @@ public final class CoreDataBase {
                 try context.save()
             }
         } catch {
-            print("Error saving context \(error)")
+            print("Error with saving context \(error)")
         }
     }
     
     func query() -> [TodoItem] {
-        var collectionsOfToDoItems = [TodoItem]()
+        var items = [TodoItem]()
         let request: NSFetchRequest<TodoItemCoreData> = TodoItemCoreData.fetchRequest()
         do {
             if let context = context {
                 itemsCoreData = try context.fetch(request)
                 for item in itemsCoreData {
-                    if let convertedItem = TodoItem.parse(coreItem: item) {
-                        collectionsOfToDoItems.append(convertedItem)
+                    if let newItem = TodoItem.parse(coreItem: item) {
+                        items.append(newItem)
                     }
                 }
             }
         } catch {
-            print("Error loading context \(error)")
+            print("Error with loading context \(error)")
         }
-        return collectionsOfToDoItems
+        return items
     }
 
     func deleteAllData() {

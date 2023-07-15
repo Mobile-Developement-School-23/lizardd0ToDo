@@ -69,9 +69,9 @@ struct ServiceTodoIem: Codable {
 }
 
 struct ResponseList: Codable {
-    var status: String?
-    var list = [ServiceTodoIem]()
-    var revision: Int32?
+    let status: String?
+    let list: [ServiceTodoIem]
+    let revision: Int32?
     
     init(status: String? = nil, list: [ServiceTodoIem], revision: Int32? = nil) {
         self.status = status
@@ -81,9 +81,9 @@ struct ResponseList: Codable {
 }
 
 struct ResponseItem: Codable {
-    var status: String?
-    var element: ServiceTodoIem
-    var revision: Int32?
+    let status: String?
+    let element: ServiceTodoIem
+    let revision: Int32?
     
     init(status: String? = nil, element: ServiceTodoIem, revision: Int32? = nil) {
         self.status = status
